@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users List</title>
+    <script>
+        window.onload = async function() {
+            try {
+                // Send a GET request to the backend API
+                const response = await fetch('/users');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch users');
+                }
+
+                // Parse the response as JSON
+                const users = await response.json();
+
+                // Get the table body element
+                const tableBody = document.getElementById('users-table-body');
+
+                // Loop through the users data and create rows
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td>${user.password}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+    </script>
+</head>
+<body>
+<h1>Users List</h1>
+<a href="users/new">Add User</a>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>User Name</th>
+        <th>Password</th>
+    </tr>
+    </thead>
+    <tbody id="users-table-body">
+    <!-- User rows will be inserted here dynamically -->
+    </tbody>
+</table>
+</body>
+</html>

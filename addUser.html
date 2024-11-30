@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script>
+        // Function to handle form submission with fetch
+        async function submitForm(event) {
+            event.preventDefault();  // Prevent the default form submission
+            
+            // Get form data
+            const formData = new FormData(event.target);
+            const data = {
+                name: formData.get('name'),
+                password: formData.get('password')
+            };
+
+            try {
+                // Make the API request using fetch
+                const response = await fetch('http://localhost:8081/api/users/addUser', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',  // Indicating JSON payload
+                    },
+                    body: JSON.stringify(data)  // Convert the data object to JSON
+                });
+
+                // Check if the request was successful
+                if (response.ok) {
+                    alert('User added successfully!');
+                } else {
+                    alert('Error: ');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to add user');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Add Users</h1>
+    <!-- Make sure the form calls submitForm on submit and the event handler is correct -->
+    <form id="user-form" onsubmit="submitForm(event)">
+        Name: <input type="text" name="name" required/><br/>
+        Password: <input type="password" name="password" required/><br/>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
