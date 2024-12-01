@@ -21,6 +21,10 @@
                         <td>${user.id}</td>
                         <td>${user.name}</td>
                         <td>${user.password}</td>
+                        <td>
+                            <button><a href="/editUser.html?id=${user.id}">Edit</a></button>
+                            <button onclick="deleteUser(${user.id})">Delete</button>
+                        </td>
                     `;
                     tableBody.appendChild(row);
                 });
